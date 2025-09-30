@@ -1,6 +1,7 @@
-<nav class="navbar navbar-expand-lg bg-primary">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid d-flex justify-content-between">
-    <%= link_to root_path, class: "navbar-brand m-0" do %>
+    <%= link_to root_path, 
+                class: "navbar-brand m-0" do %>
       Navbar
     <% end %>
 
@@ -17,7 +18,7 @@
                           path: root_path, 
                           html_options: { class: "nav-link" }) %>
         </li>
-        
+
         <% if authenticated? %>
         
         <% else %>          
@@ -42,8 +43,24 @@
  
       </ul>
 
-      <div class="d-flex">
-        <%= button_to "Sign Out" %>
+      <div class="d-flex gap-3">
+        <% if authenticated? %>
+          <%= button_to session_path, 
+                        class: 'btn btn-outline-danger',
+                        method: :delete do %>
+            Sair
+          <% end %>
+        <% else %>
+          <%= link_to new_session_path,
+                      class: 'btn btn-outline-primary' do %>
+            Entrar
+          <% end %>
+
+          <%= link_to new_user_path,
+                      class: 'btn btn-outline-secondary' do %>
+            Registrar
+          <% end %>
+        <% end %>
       </div>
     </div>
   </div>
