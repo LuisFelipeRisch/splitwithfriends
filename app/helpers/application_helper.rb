@@ -15,9 +15,11 @@ module ApplicationHelper
     input_field = form.send(as, field, class: "form-control #{invalid_class}")
 
     error_feedback = if errors.any?
-                      content_tag(:div, errors.join(", "), class: "invalid-feedback")
+                      content_tag(:ul, class: "invalid-feedback mb-0") do
+                        errors.map { |msg| concat(content_tag(:li, msg)) }
+                      end
     else
-      "".html_safe
+                      "".html_safe
     end
 
     unless icon

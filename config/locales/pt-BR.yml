@@ -1,0 +1,15 @@
+pt-BR:
+  activerecord: 
+    errors: 
+      messages: 
+        blank: não pode ficar em branco!
+        invalid_email: não é um email válido
+        taken: já está em uso
+      models: 
+        user:
+          too_short: muito curto. Espera-se no mínimo %{count} caracteres
+          invalid: "formato inesperado. Espera-se que esteja incluido: pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial"
+          attributes:
+            password_confirmation: 
+              confirmation: não é igual a senha informada
+              
