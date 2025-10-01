@@ -1,31 +1,52 @@
-<%= form_with model: @user do |form| %>
-  <div>
-    <%= form.label :first_name, 'Nome' %>
-    <%= form.search_field :first_name %>
-  </div>
+<div class="d-flex justify-content-center align-items-center min-vh-100 px-5 py-3">
+  <div class="w-100" style="max-width: 420px;">
+    <div class="p-4 shadow-sm rounded bg-white d-flex flex-column gap-3">
+      <h2 class="m-0">Registrar</h2>
 
-  <div>
-    <%= form.label :last_name, 'Sobrenome' %>
-    <%= form.search_field :last_name %>
-  </div>
+      <p class="m-0">Junte-se à SplitWithFriends para gerenciar facilmente despesas de um grupo de amigos</p>
 
-  <div>
-    <%= form.label :email_address, 'E-mail' %>
-    <%= form.email_field :email_address %>
-  </div>
+      <%= form_with model: @user, 
+                    html: {
+                      class: 'd-flex flex-column gap-3'
+                    } do |form| %>
 
-  <div>
-    <%= form.label :password, 'Senha' %>
-    <%= form.password_field :password %>
-  </div>
+        <%= bs_form_field(form:, 
+                          field: :first_name, 
+                          label: 'Nome', 
+                          as: :search_field, 
+                          icon: content_tag(:i, "", class: "fa-solid fa-user")) %>
+        <%= bs_form_field(form:, 
+                          field: :last_name, 
+                          label: 'Sobrenome', 
+                          as: :search_field, 
+                          icon: content_tag(:i, "", class: "fa-solid fa-user")) %>
+        <%= bs_form_field(form:, 
+                          field: :email_address, 
+                          label: 'E-mail', 
+                          as: :email_field,
+                          icon: content_tag(:i, "", class: "fa-solid fa-envelope")) %>
+        <%= bs_form_field(form:, 
+                          field: :password, 
+                          label: 'Senha', 
+                          as: :password_field, 
+                          icon: content_tag(:i, "", class: "fa-solid fa-lock")) %>
+        <%= bs_form_field(form:, 
+                          field: :password_confirmation, 
+                          label: 'Confirme sua senha', 
+                          as: :password_field, 
+                          icon: content_tag(:i, "", class: "fa-solid fa-lock")) %>
 
-  <div>
-    <%= form.label :password_confirmation, 'Confirme sua senha' %>
-    <%= form.password_field :password_confirmation %>
-  </div>
+        <div>
+          <%= form.submit 'Registrar', class: 'btn btn-primary w-100' %>
+        </div>
 
-  <div>
-    <%= form.submit %>
+        <div>
+          <%= link_to new_session_path, 
+                      class: 'btn btn-secondary w-100' do %>
+              Entrar
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
-<% end %>
-
+</div>
