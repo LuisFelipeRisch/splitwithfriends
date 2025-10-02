@@ -9,4 +9,8 @@ class User < ApplicationRecord
   validates :first_name, :last_name, presence: true, length: { minimum: 3 }
   validates :email_address, presence: true, uniqueness: true, email: true
   validates :password, :password_confirmation, length: { minimum: 8 }, format: { with: EXPECTED_PASSWORD_FORMAT }
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end
