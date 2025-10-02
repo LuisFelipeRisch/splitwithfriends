@@ -10,9 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_29_234659) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_02_012954) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "group_invitations", force: :cascade do |t|
+    t.string "email_address", null: false
+    t.integer "status", default: 0, null: false
+    t.bigint "group_id", null: false
+    t.bigint "inviter_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email_address", "group_id"], name: "index_group_invitations_on_email_address_and_group_id", unique: true
+    t.index ["email_address"], name: "index_group_invitations_on_email_address"
+    t.index ["group_id"], name: "index_group_invitations_on_group_id"
+    t.index ["inviter_id"], name: "index_group_invitations_on_inviter_id"
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "group_id", null: false
+    t.integer "role", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_memberships_on_group_id"
+    t.index ["user_id", "group_id"], name: "index_memberships_on_user_id_and_group_id", unique: true
+    t.index ["user_id"], name: "index_memberships_on_user_id"
+  end
 
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -33,5 +64,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_29_234659) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "group_invitations", "groups"
+  add_foreign_key "group_invitations", "users", column: "email_address", primary_key: "email_address"
+  add_foreign_key "group_invitations", "users", column: "inviter_id"
+  add_foreign_key "memberships", "groups"
+  add_foreign_key "memberships", "users"
   add_foreign_key "sessions", "users"
 end

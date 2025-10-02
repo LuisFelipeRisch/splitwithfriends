@@ -4,6 +4,12 @@ class User < ApplicationRecord
   has_secure_password
   has_many :sessions, dependent: :destroy
 
+  has_many :memberships, dependent: :destroy
+  has_many :groups, through: :memberships, source: :group
+
+  has_many :sent_group_invitations, class_name: "GroupInvitation", foreign_key: :inviter_id, dependent: :destroy
+  has_many :received_group_invitations, class_name: "GroupInvitation", primary_key: :email_address, foreign_key: :email_address, dependent: :destroy
+
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
   validates :first_name, :last_name, presence: true, length: { minimum: 3 }
