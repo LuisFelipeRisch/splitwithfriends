@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     @user.assign_attributes(safe_params_for_create)
 
     if @user.save
-      redirect_to new_session_path(email: @user.email), flash: { success: "Usuário criado com sucesso!" }
+      redirect_to new_session_path(email_address: @user.email_address), flash: { success: "Usuário criado com sucesso!" }
     else
       render :new, status: :unprocessable_entity
     end

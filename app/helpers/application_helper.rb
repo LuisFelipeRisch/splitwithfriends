@@ -6,13 +6,20 @@ module ApplicationHelper
     link_to(name, path, html_options.merge(class: classes))
   end
 
-  def bs_form_field(form:, field:, label:, as:, icon: nil, icon_position: :left)
+  def bs_form_field(form:, field:, label:, as:, icon: nil, icon_position: :left, value: nil)
     label_tag = form.label(field, label, class: "form-label")
 
-    errors = form.object.errors[field]
+    errors = if object = form.object
+      object.errors[field]
+    else
+      []
+    end
     invalid_class = errors.any? ? "is-invalid" : ""
 
-    input_field = form.send(as, field, class: "form-control #{invalid_class}")
+    input_options = { class: "form-control #{invalid_class}" }
+    input_options[:value] = value if value.present?
+
+    input_field = form.send(as, field, input_options)
 
     error_feedback = if errors.any?
                       content_tag(:ul, class: "invalid-feedback mb-0") do
