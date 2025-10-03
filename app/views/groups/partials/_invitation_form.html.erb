@@ -1,0 +1,14 @@
+<div class="nested-fields d-flex gap-3">
+  <%= bs_form_field(form:,
+                    field: :email_address,
+                    label: 'E-mail',
+                    as: :email_field, 
+                    placeholder: "john.doe@gmail.com", 
+                    icon: content_tag(:i, "", class: "fa-solid fa-envelope"), 
+                    wrapper_class: "flex-grow-1") %>
+  <%= button_tag class: "btn btn-danger align-self-end", 
+                 type: "button",
+                 data: { action: 'invitations#remove' } do %>
+    <i class="fa-solid fa-trash"></i>
+  <% end %>
+</div>

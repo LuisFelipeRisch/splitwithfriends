@@ -15,7 +15,6 @@ class CreateGroupInvitations < ActiveRecord::Migration[8.0]
     add_index :group_invitations, [ :email_address, :group_id ], unique: true
     add_foreign_key :group_invitations, :groups
     add_foreign_key :group_invitations, :users, column: :inviter_id
-    add_foreign_key :group_invitations, :users, column: :email_address, primary_key: :email_address
   end
 
   def down
@@ -25,7 +24,6 @@ class CreateGroupInvitations < ActiveRecord::Migration[8.0]
     remove_index :group_invitations, column: [ :email_address, :group_id ]
     remove_foreign_key :group_invitations, :groups
     remove_foreign_key :group_invitations, :users, column: :inviter_id
-    remove_foreign_key :group_invitations, :users, column: :email_address
 
     drop_table :group_invitations
   end

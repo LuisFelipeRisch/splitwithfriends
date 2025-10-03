@@ -65,7 +65,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_02_012954) do
   end
 
   add_foreign_key "group_invitations", "groups"
-  add_foreign_key "group_invitations", "users", column: "email_address", primary_key: "email_address"
   add_foreign_key "group_invitations", "users", column: "inviter_id"
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "users"

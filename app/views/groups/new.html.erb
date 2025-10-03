@@ -1,0 +1,54 @@
+<div class="m-5 d-flex flex-column gap-3">
+  <h2 class="m-0 fw-bold">Criar Novo Grupo</h2>
+  <div class="row gap-3">
+    <div class="col-12 col-md-8 p-4 shadow-sm rounded bg-white d-flex flex-column">
+      <%= form_with model: @group,
+                    html: { class: 'd-flex flex-column gap-3' } do |form| %>
+        <h4 class="m-0">Detalhes do Grupo</h4>
+
+        <%= bs_form_field(form:,
+                          field: :name,
+                          label: 'Nome',
+                          as: :search_field, 
+                          placeholder: "ex: Casa do Léo") %>
+        <%= bs_form_field(form:,
+                          field: :description,
+                          label: 'Descrição',
+                          as: :textarea,
+                          placeholder: "Grupo para gerenciar as despesas da casa.") %>
+
+        <hr class="m-0"/>
+
+        <h4 class="m-0">Convidar</h4>
+
+        <div data-controller="invitations" class="d-flex flex-column gap-3">
+          <div data-invitations-target="container" class="d-flex flex-column gap-3">
+            <%= form.fields_for :group_invitations do |invitation_form| %>
+              <%= render "/groups/partials/invitation_form", form: invitation_form %>
+            <% end %>
+          </div>
+
+          <template data-invitations-target="template">
+            <%= form.fields_for :group_invitations, GroupInvitation.new, child_index: "NEW_RECORD" do |ff| %>
+              <%= render "/groups/partials/invitation_form", form: ff %>
+            <% end %>
+          </template>
+
+          <%= button_tag class: "btn btn-success align-self-start", 
+                         type: "button",
+                         data: { action: 'invitations#add' } do %>
+            Adicionar
+          <% end %>
+        </div>
+
+        <hr class="m-0"/>
+
+        <%= form.submit class: "btn btn-primary align-self-end" %>
+      <% end %>
+    </div>
+
+    <div class="col-12 col-md p-4 shadow-sm rounded bg-white d-flex flex-column gap-3">
+      b
+    </div>
+  </div>
+</div>

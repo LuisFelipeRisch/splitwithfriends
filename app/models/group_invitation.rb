@@ -9,4 +9,16 @@ class GroupInvitation < ApplicationRecord
                 refused: 2,
                 ignored: 3,
                 default: :pending
+
+  normalizes :email_address, with: ->(e) { e.strip.downcase }
+
+  before_validation :set_inviter_with_current_user, on: :create, unless: :inviter
+
+  validates :email_address, presence: true, uniqueness: { scope: :group }, email: true
+
+  private
+
+    def set_inviter_with_current_user
+      self.inviter = User.current
+    end
 end

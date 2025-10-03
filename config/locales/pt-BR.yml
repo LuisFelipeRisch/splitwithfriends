@@ -1,4 +1,8 @@
 pt-BR:
+  helpers:
+    submit: 
+      group: 
+        create: Criar Grupo
   activerecord: 
     errors: 
       messages: 
@@ -12,4 +16,6 @@ pt-BR:
           attributes:
             password_confirmation: 
               confirmation: não é igual a senha informada
+        group: 
+          too_short: muito curto. Espera-se no mínimo %{count} caracteres
               
