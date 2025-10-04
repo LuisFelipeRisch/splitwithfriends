@@ -3,7 +3,18 @@ pt-BR:
     submit: 
       group: 
         create: Criar Grupo
-  activerecord: 
+  activerecord:
+    attributes: 
+      membership: 
+        id: ID
+        role: Papel
+      membership/role: 
+        member: Membro
+        admin: Administrador
+      user:
+        id: ID
+        first_name: Nome
+        last_name: Sobrenome
     errors: 
       messages: 
         blank: não pode ficar em branco!

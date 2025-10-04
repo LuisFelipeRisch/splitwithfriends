@@ -1,0 +1,48 @@
+<%= turbo_frame_tag :group_members do %>
+  <style>
+    #group_members {
+      .table-scroll-container {
+        height: 60vh;
+        overflow-y: auto;
+      }
+
+      .table-scroll-container thead th {
+        position: sticky;
+        top: 0;
+        background-color: white;
+        box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+      }
+    }
+  </style>
+
+  <div class="d-flex flex-column gap-3">
+    <div class="table-scroll-container">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col"><%= User.human_attribute_name("id") %></th>
+            <th scope="col"><%= User.human_attribute_name("first_name") %></th>
+            <th scope="col"><%= User.human_attribute_name("last_name") %></th>
+            <th scope="col"><%= Membership.human_attribute_name("role") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @memberships.each do |membership| %>
+            <% user = membership.user %>
+            <tr>
+              <th scope="row"><%= user.id %></th>
+              <td><%= user.first_name %></td>
+              <td><%= user.last_name %></td>
+              <td><%= Membership.human_attribute_name("role.#{membership.role}") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="align-self-end">
+      <%= paginate @memberships %>
+    </div>
+  </div>
+
+<% end %>

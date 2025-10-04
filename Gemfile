@@ -65,3 +65,4 @@ group :test do
 end
 
 gem "cssbundling-rails", "~> 1.4"
+gem "kaminari"

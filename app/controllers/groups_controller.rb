@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   before_action :redirect_to_new_if_should_on_index, only: %i[ index ]
   before_action :build_group, only: %i[ new create ]
-  before_action :set_group, only: %i[ show ]
+  before_action :group, only: %i[ show ]
 
   def index; end
 
@@ -41,7 +41,9 @@ class GroupsController < ApplicationController
                              group_invitations_attributes: [ [ :email_address ] ] ])
     end
 
-    def set_group
-      render_403 unless @group = current_user.groups.find_by(id: params[:id])
+    def group
+      @group ||= current_user.groups.find_by(id: params[:id])
     end
+
+    def current_user_authorized_for_show? = group
 end

@@ -1,1 +1,39 @@
-<%= @group.name %>
+<div class="m-5 d-flex flex-column gap-3">
+  <div>
+    <h2 class="m-0 fw-bold"><%= @group.name %></h2>
+    <p class="m-0"><%= @group.description %></p>
+  </div>
+
+  <hr class="m-0"/>
+
+  <div class="d-flex flex-column gap-3">
+    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" 
+                id="pills-memberships-tab" 
+                data-bs-toggle="pill" 
+                data-bs-target="#pills-memberships" 
+                type="button" 
+                role="tab" 
+                aria-controls="pills-memberships" 
+                aria-selected="true">Membros</button>
+      </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+      <div class="tab-pane fade show active" 
+           id="pills-memberships" 
+           role="tabpanel" 
+           aria-labelledby="pills-memberships-tab">
+        <%= turbo_frame_tag :group_members, 
+                            loading: :lazy, 
+                            src: group_memberships_path(@group) do %>
+          <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

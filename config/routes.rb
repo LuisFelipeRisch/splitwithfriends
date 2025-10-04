@@ -3,7 +3,11 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
 
   resources :users, only: %i[ new create ]
-  resources :groups
+  resources :groups do
+    scope module: :groups do
+      resources :memberships, only: %i[ index ]
+    end
+  end
 
   resources :home,      only: %i[ index ]
   resources :plans,     only: %i[ index ]
