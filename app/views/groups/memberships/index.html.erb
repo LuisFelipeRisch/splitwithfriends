@@ -33,7 +33,11 @@
               <th scope="row"><%= user.id %></th>
               <td><%= user.first_name %></td>
               <td><%= user.last_name %></td>
-              <td><%= Membership.human_attribute_name("role.#{membership.role}") %></td>
+              <td>
+                <span class="badge rounded-pill text-bg-<%= membership.role_to_badge_color %>">
+                  <%= Membership.human_attribute_name("role.#{membership.role}") %>
+                </span>
+              </td>
             </tr>
           <% end %>
         </tbody>
@@ -44,5 +48,4 @@
       <%= paginate @memberships %>
     </div>
   </div>
-
 <% end %>
