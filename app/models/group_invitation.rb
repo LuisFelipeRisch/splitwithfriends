@@ -7,7 +7,6 @@ class GroupInvitation < ApplicationRecord
   enum :status, pending: 0,
                 accepted: 1,
                 refused: 2,
-                ignored: 3,
                 default: :pending
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
