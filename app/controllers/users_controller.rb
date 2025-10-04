@@ -28,4 +28,8 @@ class UsersController < ApplicationController
                               password
                               password_confirmation ])
     end
+
+    def current_user_authorized_for_new? = true
+
+    def current_user_authorized_for_create? = true
 end

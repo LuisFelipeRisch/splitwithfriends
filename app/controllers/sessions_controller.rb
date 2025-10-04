@@ -26,4 +26,10 @@ class SessionsController < ApplicationController
     def set_email_address
       @email_address = params[:email_address]
     end
+
+    def current_user_authorized_for_new? = true
+
+    def current_user_authorized_for_create? = true
+
+    def current_user_authorized_for_destroy? = current_user
 end

@@ -45,5 +45,11 @@ class GroupsController < ApplicationController
       @group ||= current_user.groups.find_by(id: params[:id])
     end
 
+    def current_user_authorized_for_index? = current_user
+
     def current_user_authorized_for_show? = group
+
+    def current_user_authorized_for_new? = current_user
+
+    def current_user_authorized_for_create? = current_user
 end
