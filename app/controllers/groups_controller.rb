@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
-  before_action :redirect_to_new_if_should_on_index, only: %i[ index ]
+  before_action :redirect_to_new_if_should_on_index, only: %i[ index ], if: :should_redirect_to_new_on_index?
+  before_action :redirect_to_show_if_should_on_index, only: %i[ index ], if: :should_redirect_to_show_on_index?
   before_action :build_group, only: %i[ new create ]
   before_action :group, only: %i[ show ]
 
@@ -26,9 +27,15 @@ class GroupsController < ApplicationController
     end
 
     def redirect_to_new_if_should_on_index
-      return unless should_redirect_to_new_on_index?
-
       redirect_to new_group_path
+    end
+
+    def should_redirect_to_show_on_index?
+      current_user.last_group
+    end
+
+    def redirect_to_show_if_should_on_index
+      redirect_to group_path(current_user.last_group)
     end
 
     def build_group
