@@ -15,6 +15,9 @@ class GroupInvitation < ApplicationRecord
 
   validates :email_address, presence: true, uniqueness: { scope: :group }, email: true
 
+  delegate :full_name, to: :inviter, prefix: true
+  delegate :name, :description, to: :group, prefix: true
+
   private
 
     def set_inviter_with_current_user

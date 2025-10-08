@@ -1,0 +1,13 @@
+<%= turbo_stream.append 'group_invitations_list' do %>
+  <%= render 'group_invitations/partials/group_invitations_list', 
+             group_invitations: @group_invitations %>
+<% end %>
+
+<% if @group_invitations.last_page? %>
+  <%= turbo_stream.remove 'load_more_invitations' %>
+<% else %>
+  <%= turbo_stream.replace 'load_more_invitations' do %>
+    <%= render 'group_invitations/partials/load_more_invitations', 
+               group_invitations: @group_invitations %>
+  <% end %>
+<% end %>

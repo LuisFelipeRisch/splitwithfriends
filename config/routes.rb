@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :group_invitations, only: %i[ index update ]
+
   resources :home,      only: %i[ index ]
   resources :plans,     only: %i[ index ]
   resources :tutorials, only: %i[ index ]

@@ -1,0 +1,5 @@
+<%= turbo_frame_tag :load_more_invitations, 
+                    src: group_invitations_path(page: group_invitations.next_page, format: :turbo_stream), 
+                    loading: :lazy do %>
+  <%= render 'shared/loading_spinner' %>
+<% end %>
