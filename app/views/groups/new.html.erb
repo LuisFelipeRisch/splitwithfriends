@@ -47,7 +47,7 @@
       <% end %>
     </div>
 
-    <div class="col-12 col-md p-4 shadow-sm rounded bg-white d-flex flex-column gap-3" style="max-height: 400px;">
+    <div class="col-12 col-md p-4 shadow-sm rounded bg-white d-flex flex-column gap-3 overflow-auto" style="max-height: 400px;">
       <%= turbo_frame_tag :group_invitations, 
                           loading: :lazy, 
                           src: group_invitations_path do %>

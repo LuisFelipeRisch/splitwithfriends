@@ -2,15 +2,21 @@
   <div class="d-flex flex-column gap-3">
     <h4 class="m-0">Convites Pendentes</h4>
 
-    <div id="group_invitations_list" 
-         class="d-flex flex-column gap-3">
-      <%= render 'group_invitations/partials/group_invitations_list', 
-                 group_invitations: @group_invitations %>
-    </div>
-    
-    <% if !@group_invitations.last_page? %>
-      <%= render 'group_invitations/partials/load_more_invitations', 
-                 group_invitations: @group_invitations %>
+    <% if @group_invitations.any? %>
+      <div id="group_invitations_list" 
+          class="d-flex flex-column gap-3">
+        <%= render 'group_invitations/partials/group_invitations_list', 
+                  group_invitations: @group_invitations %>
+      </div>
+
+      <% if !@group_invitations.last_page? %>
+        <%= render 'group_invitations/partials/load_more_invitations', 
+                  group_invitations: @group_invitations %>
+      <% end %>
+    <% else %>
+      <p class="text-center m-0">
+        Não há convites pendentes.
+      </p>
     <% end %>
   </div>
 <% end %>
