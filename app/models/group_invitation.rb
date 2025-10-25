@@ -18,9 +18,19 @@ class GroupInvitation < ApplicationRecord
   delegate :full_name, to: :inviter, prefix: true
   delegate :name, :description, to: :group, prefix: true
 
+  after_update :add_invitee_to_group!, if: :should_add_invitee_to_group?
+
   private
 
     def set_inviter_with_current_user
       self.inviter = User.current
+    end
+
+    def should_add_invitee_to_group?
+      status_previously_changed? && accepted?
+    end
+
+    def add_invitee_to_group!
+      group.memberships.create!(user: invitee)
     end
 end

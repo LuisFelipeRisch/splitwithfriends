@@ -7,7 +7,12 @@ class GroupInvitationsController < ApplicationController
 
   def index; end
 
-  def update; end
+  def update
+    binding.pry
+    @group_invitation.status = params[:status]
+
+    redirect_to group_path(@group_invitation.group), flash: { success: "Convite aceito com sucesso!" } if @group_invitation.save && @group_invitation.accepted?
+  end
 
   private
 
@@ -21,7 +26,9 @@ class GroupInvitationsController < ApplicationController
 
     def group_invitation
       @group_invitation ||= current_user.received_group_invitations
+                                        .strict_loading
                                         .pending
+                                        .includes(:group, :invitee)
                                         .find_by(id: params[:id])
     end
 
