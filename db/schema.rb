@@ -10,9 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_02_012954) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_25_220758) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "expenses", force: :cascade do |t|
+    t.bigint "payer_id", null: false
+    t.bigint "group_id", null: false
+    t.integer "category", null: false
+    t.decimal "paid_value", precision: 10, scale: 2, null: false
+    t.date "date", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "group_balances", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "month", null: false
+    t.integer "year", null: false
+    t.decimal "total_paid_value", precision: 10, scale: 2, default: "0.0", null: false
+    t.decimal "balance", precision: 10, scale: 2, default: "0.0", null: false
+    t.integer "lock_version"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id", "user_id", "month", "year"], name: "idx_on_group_id_user_id_month_year_aa9ba3e16a", unique: true
+  end
 
   create_table "group_invitations", force: :cascade do |t|
     t.string "email_address", null: false
@@ -64,6 +88,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_02_012954) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "expenses", "groups"
+  add_foreign_key "expenses", "users", column: "payer_id"
+  add_foreign_key "group_balances", "groups"
+  add_foreign_key "group_balances", "users"
   add_foreign_key "group_invitations", "groups"
   add_foreign_key "group_invitations", "users", column: "inviter_id"
   add_foreign_key "memberships", "groups"

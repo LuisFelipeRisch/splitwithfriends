@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :memberships, only: %i[ index ]
     end
   end
+  resources :expenses
 
   resources :group_invitations, only: %i[ index update ]
 

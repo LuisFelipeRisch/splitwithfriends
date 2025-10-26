@@ -1,0 +1,58 @@
+<div class="m-5 d-flex flex-column gap-3">
+  <div>
+    <h2 class="m-0 fw-bold">Lançar Despesa</h2>
+  </div>
+
+  <%= form_with model: @expense, 
+                html: {
+                  class: 'd-flex flex-column gap-3'
+                } do |form| %>
+
+    <div class="d-flex gap-3 flex-wrap">
+      <%= bs_form_field(form:, 
+                        field: :payer, 
+                        label: 'Pago Por', 
+                        as: :search_field, 
+                        disabled: true, 
+                        wrapper_class: 'flex-grow-1') %>
+
+      <%= bs_form_field(form:, 
+                        field: :group, 
+                        label: 'Grupo', 
+                        as: :search_field, 
+                        disabled: true, 
+                        wrapper_class: 'flex-grow-1') %>
+    </div>
+
+    <div class="d-flex gap-3 flex-wrap">
+      <%= bs_form_field(form:, 
+                        field: :category, 
+                        label: 'Categoria', 
+                        as: :select,
+                        collection: @expense.available_categories,
+                        select_options: { prompt: "Selecione uma categoria" },
+                        wrapper_class: 'flex-grow-1') %>
+
+      <%= bs_form_field(form:, 
+                        field: :paid_value, 
+                        label: 'Valor Pago', 
+                        as: :number_field, 
+                        wrapper_class: 'flex-grow-1',
+                        step: 0.01) %>
+
+      <%= bs_form_field(form:, 
+                        field: :date, 
+                        label: 'Data', 
+                        as: :date_field, 
+                        wrapper_class: 'flex-grow-1') %>
+    </div>
+
+    <%= bs_form_field(form:, 
+                      field: :description, 
+                      label: 'Descrição', 
+                      as: :textarea, 
+                      wrapper_class: 'flex-grow-1') %>
+
+    <%= form.submit class: "btn btn-primary align-self-end" %>
+  <% end %>
+</div>

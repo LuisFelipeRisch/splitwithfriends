@@ -3,6 +3,8 @@ pt-BR:
     submit: 
       group: 
         create: Criar Grupo
+      expense: 
+        create: Criar Despesa
   activerecord:
     attributes: 
       membership: 
@@ -11,6 +13,17 @@ pt-BR:
       membership/role: 
         member: Membro
         admin: Administrador
+      expense/category: 
+        water: Água
+        electricity: Eletricidade
+        gas: Gás
+        condominium: Condomínio
+        market: Mercado
+        delivery: Entrega
+        rent: Aluguel
+        maid: Diarista
+        leisure: Lazer
+        others: Outros      
       user:
         id: ID
         first_name: Nome
@@ -20,6 +33,9 @@ pt-BR:
         blank: não pode ficar em branco!
         invalid_email: não é um email válido
         taken: já está em uso
+        not_a_number: não é um número
+        too_many_decimal_places: "deve ter no máximo %{count} casas decimais"
+        invalid_decimal_format: "não é um formato decimal válido"
       models: 
         user:
           too_short: muito curto. Espera-se no mínimo %{count} caracteres
@@ -29,4 +45,7 @@ pt-BR:
               confirmation: não é igual a senha informada
         group: 
           too_short: muito curto. Espera-se no mínimo %{count} caracteres
+        expense: 
+          greater_than: '%{value} tem que ser maior que %{count}'
+          before_current_month: deve ser maior o igual a %{beginning_of_month}
               

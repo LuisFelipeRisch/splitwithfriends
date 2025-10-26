@@ -13,6 +13,9 @@ class User < ApplicationRecord
   has_many :sent_group_invitations, class_name: "GroupInvitation", foreign_key: :inviter_id, dependent: :destroy
   has_many :received_group_invitations, class_name: "GroupInvitation", primary_key: :email_address, foreign_key: :email_address, dependent: :destroy
 
+  has_many :expenses, class_name: "Expense", foreign_key: :payer_id
+  has_many :group_balances
+
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
   validates :first_name, :last_name, presence: true, length: { minimum: 3 }
@@ -28,4 +31,6 @@ class User < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}"
   end
+
+  def to_s = full_name
 end

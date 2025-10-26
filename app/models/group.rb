@@ -6,11 +6,16 @@ class Group < ApplicationRecord
   has_many :group_invitations, dependent: :destroy
   accepts_nested_attributes_for :group_invitations, allow_destroy: true
 
+  has_many :expenses
+  has_many :group_balances
+
   validates :name, presence: true, length: { minimum: 3 }
   validates :description, presence: true, length: { minimum: 20 }
 
   before_create :build_membership_with_creator
   before_create :build_group_invitation_with_creator
+
+  def to_s = name
 
   private
 

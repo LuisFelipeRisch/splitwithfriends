@@ -15,23 +15,32 @@ module ApplicationHelper
     link_to(name, path, html_options.merge(class: classes))
   end
 
-  def bs_form_field(form:, field:, label:, as:, **options)
-    icon          = options[:icon]
-    icon_position = options[:icon_position] || :left
-    value         = options[:value]
-    placeholder   = options[:placeholder]
-    wrapper_class = options[:wrapper_class]
+def bs_form_field(form:, field:, label:, as:, **options)
+    icon          = options.delete(:icon)
+    icon_position = options.delete(:icon_position) || :left
+    wrapper_class = options.delete(:wrapper_class)
+
+    collection     = options.delete(:collection)
+    select_options = options.delete(:select_options) || {}
+
+    step = options.delete(:step)
 
     label_tag = form.label(field, label, class: "form-label")
 
     errors = form.object ? form.object.errors[field] : []
     invalid_class = errors.any? ? "is-invalid" : ""
 
-    input_options               = { class: "form-control #{invalid_class}" }
-    input_options[:value]       = value if value.present?
-    input_options[:placeholder] = placeholder if placeholder.present?
+    html_options = options.dup
+    html_options[:class] = "#{options[:class]} #{invalid_class}".strip
+    html_options[:step] = step if !step.nil?
 
-    input_field = form.send(as, field, input_options)
+    input_field = if as == :select
+      html_options[:class] = "form-select #{html_options[:class]}".strip
+      form.select(field, collection, select_options, html_options)
+    else
+      html_options[:class] = "form-control #{html_options[:class]}".strip
+      form.send(as, field, html_options)
+    end
 
     error_feedback = if errors.any?
       content_tag(:ul, class: "invalid-feedback mb-0") do
@@ -49,16 +58,16 @@ module ApplicationHelper
 
     icon_html = content_tag(:span, icon, class: "input-group-text")
 
-    input_group = content_tag(:div, class: "input-group") do
+    input_group = content_tag(:div, class: "input-group has-validation") do
       if icon_position == :left
-        icon_html + input_field + error_feedback
+        icon_html + input_field
       else
-        input_field + icon_html + error_feedback
+        input_field + icon_html
       end
     end
 
     content_tag(:div, class: wrapper_class) do
-      label_tag + input_group
+      label_tag + input_group + error_feedback
     end
   end
 end
