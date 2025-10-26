@@ -1,0 +1,71 @@
+<style>
+  #balance {
+    .table-scroll-container {
+      height: 75vh;
+      overflow-y: auto;
+    }
+
+    .table-scroll-container thead th {
+      position: sticky;
+      top: 0;
+      background-color: white;
+      box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+    }
+  }
+</style>
+
+<div id="balance" class="m-5 d-flex flex-column gap-3">
+  <div class="d-flex justify-content-between align-items-center">
+    <h2 class="m-0 fw-bold">Balanço</h2>
+
+    <%= form_with(url: group_balances_path, 
+                  method: :get, 
+                  html: { class: "d-flex gap-3" }) do |form| %>
+      <%= bs_form_field(form:, 
+                        field: :month, 
+                        label: 'Mês', 
+                        as: :select,
+                        collection: available_months,
+                        select_options: { selected: @month }, 
+                        onchange: "this.form.submit();")  %>
+      <%= bs_form_field(form:, 
+                        field: :year, 
+                        label: 'Ano', 
+                        as: :select,
+                        collection: available_years,
+                        select_options: { selected: @year }, 
+                        onchange: "this.form.submit();") %>
+    <% end %>
+  </div>
+
+  <% if @group_balances.any? %>
+    <div class="table-scroll-container">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Usuário</th>
+            <th scope="col">Valor Total Pago</th>
+            <th scope="col">Saldo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @group_balances.each do |group_balance| %>
+            <tr>
+              <td><%= group_balance.user.full_name %></td>
+              <td><%= number_to_currency(group_balance.total_paid_value, unit: "R$ ", separator: ",", delimiter: ".") %></td>
+              <td>
+                <span class="badge rounded-pill text-bg-<%= group_balance.balance_to_badge_color %>">
+                  <%= number_to_currency(group_balance.balance, unit: "R$ ", separator: ",", delimiter: ".") %>
+                </span>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="text-center">
+      Não há nenhum saldo registrado para o mês e ano selecionado.
+    </div>
+  <% end %>
+</div>

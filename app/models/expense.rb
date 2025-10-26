@@ -22,6 +22,8 @@ class Expense < ApplicationRecord
 
   after_create :syncronize_balance!
 
+  delegate :month, :year, to: :date
+
   class << self
     def available_categories
       categories.map do |k, v|

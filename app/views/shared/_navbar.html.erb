@@ -27,6 +27,10 @@
             <%= nav_link_to(name: "Adicionar Despesa", 
                             path: new_expense_path, 
                             html_options: { class: "nav-link" }) %>
+
+            <%= nav_link_to(name: "Balanço", 
+                            path: group_balances_path, 
+                            html_options: { class: "nav-link" }) %>
           <% end %>
         <% else %>          
           <li class="nav-item">

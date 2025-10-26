@@ -7,9 +7,14 @@ class ExpensesController < ApplicationController
   def create
     @expense.assign_attributes(safe_params_for_create)
 
-    return if @expense.save
+    if @expense.save
+      month = @expense.month
+      year  = @expense.year
 
-    render :new, status: :unprocessable_entity
+      redirect_to group_balances_path(month:, year:), flash: { success: "Despesa adicionada com sucesso!" }
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   private

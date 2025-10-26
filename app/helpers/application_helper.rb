@@ -15,7 +15,7 @@ module ApplicationHelper
     link_to(name, path, html_options.merge(class: classes))
   end
 
-def bs_form_field(form:, field:, label:, as:, **options)
+  def bs_form_field(form:, field:, label:, as:, **options)
     icon          = options.delete(:icon)
     icon_position = options.delete(:icon_position) || :left
     wrapper_class = options.delete(:wrapper_class)
