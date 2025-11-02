@@ -14,24 +14,39 @@ FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 # Rails app lives here
 WORKDIR /rails
 
+# <--- MUDANÇA AQUI: Adicionado nodejs e npm
 # Install base packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 libvips postgresql-client && \
+    apt-get install --no-install-recommends -y curl libjemalloc2 libvips postgresql-client nodejs npm && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# <--- MUDANÇA AQUI: Instala o Yarn
+# Instala o Yarn globalmente
+RUN npm install -g yarn
 
 # Set production environment
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+    BUNDLE_PATH="/usr/local/bundle"
+    # BUNDLE_WITHOUT="development" # (Mantém comentado para desenvolvimento)
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
 
+# <--- MUDANÇA AQUI: Adicionado build-essentials, unzip, nodejs, npm
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libpq-dev pkg-config && \
+    apt-get install --no-install-recommends -y build-essential git libpq-dev pkg-config unzip nodejs npm && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# <--- MUDANÇA AQUI: Instala o Yarn
+# Instala o Yarn globalmente
+RUN npm install -g yarn
+
+# Instala o Bun (gerenciador de JS)
+ARG BUN_VERSION=1.1.18
+RUN curl -fsSL https://bun.sh/install | bash -s "bun-v$BUN_VERSION"
+ENV PATH="/root/.bun/bin:$PATH"
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./

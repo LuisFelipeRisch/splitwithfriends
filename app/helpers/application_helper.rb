@@ -60,14 +60,14 @@ module ApplicationHelper
 
     input_group = content_tag(:div, class: "input-group has-validation") do
       if icon_position == :left
-        icon_html + input_field
+        icon_html + input_field + error_feedback
       else
-        input_field + icon_html
+        input_field + icon_html + error_feedback
       end
     end
 
     content_tag(:div, class: wrapper_class) do
-      label_tag + input_group + error_feedback
+      label_tag + input_group
     end
   end
 end

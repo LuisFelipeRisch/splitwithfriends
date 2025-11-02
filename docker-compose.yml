@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  web:
+    # Constrói a imagem a partir do Dockerfile na raiz do projeto
+    build: .
+    # Comando para iniciar o servidor Rails
+    command: ["./bin/rails", "server", "-b", "0.0.0.0"]
+    # Monta o diretório atual (seu código) dentro do container
+    volumes:
+      - .:/rails
+    # Mapeia a porta 3000 do container para a porta 3000 da sua máquina
+    ports:
+      - "3000:3000"
+    # Garante que o serviço 'db' inicie antes do 'web'
+    depends_on:
+      - db
+    # Define variáveis de ambiente para o container 'web'
+    environment:
+      RAILS_ENV: development
+      # URL de conexão que o Rails usará para encontrar o banco
+      DATABASE_URL: postgresql://postgres:password@db:5432/splitwithfriends_development
+      # Lê a chave mestra do arquivo .env (veja instruções abaixo)
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+
+  db:
+    # Usa a imagem oficial do PostgreSQL, versão 16
+    image: postgres:16
+    # Define a senha do banco de dados (deve ser a mesma da DATABASE_URL)
+    environment:
+      POSTGRES_PASSWORD: password
+    # Cria um volume nomeado para persistir os dados do banco
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # Opcional: expõe a porta do banco para sua máquina local (para DBeaver, etc.)
+    # ports:
+    #   - "5432:5432"
+
+volumes:
+  # Define o volume que será usado para persistir os dados do 'db'
+  postgres_data:
