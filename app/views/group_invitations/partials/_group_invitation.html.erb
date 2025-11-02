@@ -1,4 +1,4 @@
-<div class="d-flex gap-3">
+<div id=<%= dom_id(group_invitation) %> class="d-flex gap-3">
   <div class="d-flex flex-column flex-grow-1" style="min-width: 0;">
     <p class="fw-bolder m-0 text-truncate"><%= group_invitation.inviter_full_name %></p>
     <p data-bs-toggle="tooltip"
@@ -15,6 +15,7 @@
                   data: {
                     bs_toggle: 'tooltip', 
                     bs_title: 'Aceitar Convite',
+                    turbo_frame: '_top'
                   } do %>
       <i class="fa-solid fa-check"></i>
     <% end %>

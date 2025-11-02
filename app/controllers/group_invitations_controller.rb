@@ -8,7 +8,6 @@ class GroupInvitationsController < ApplicationController
   def index; end
 
   def update
-    binding.pry
     @group_invitation.status = params[:status]
 
     redirect_to group_path(@group_invitation.group), flash: { success: "Convite aceito com sucesso!" } if @group_invitation.save && @group_invitation.accepted?

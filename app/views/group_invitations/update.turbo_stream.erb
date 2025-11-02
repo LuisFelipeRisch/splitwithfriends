@@ -1,0 +1,3 @@
+<% return unless @group_invitation.refused? %>
+
+<%= turbo_stream.remove dom_id(@group_invitation) %>
